@@ -37,4 +37,9 @@ class TrackedProducts(db.Model):
         def __init__(self, name, tracked=True):
             self.name = name
             self.tracked = tracked
-            
+
+@app.route('/results', methods=['POST'])
+def submit_results():
+    results = request.json.get('data')
+    search_text = request.json.get("search_text")
+    source = request.json.get("source")
