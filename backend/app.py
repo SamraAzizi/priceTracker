@@ -28,3 +28,9 @@ class ProductResult(db.Model):
         self.price = price
         self.search_text = search_text
         self.source = source
+
+        class TrackedProducts(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(1000))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    tracked = db.Column(db.Boolean, default=True)
