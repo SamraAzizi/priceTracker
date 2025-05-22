@@ -85,3 +85,12 @@ def get_product_results():
                 "created_at": result.created_at,
                 'priceHistory': []
             }
+
+        product_dict[url]['priceHistory'].append({
+            'price': result.price,
+            'date': result.created_at
+        })
+
+    formatted_results = list(product_dict.values())
+
+    return jsonify(formatted_results)
