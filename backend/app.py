@@ -66,3 +66,9 @@ def get_unique_search_texts():
         ProductResult.search_text).distinct().all()
     unique_search_texts = [text[0] for text in unique_search_texts]
     return jsonify(unique_search_texts)
+
+@app.route('/results')
+def get_product_results():
+    search_text = request.args.get('search_text')
+    results = ProductResult.query.filter_by(search_text=search_text).order_by(
+        ProductResult.created_at.desc()).all()
