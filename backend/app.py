@@ -72,3 +72,16 @@ def get_product_results():
     search_text = request.args.get('search_text')
     results = ProductResult.query.filter_by(search_text=search_text).order_by(
         ProductResult.created_at.desc()).all()
+    
+    product_dict = {}
+    for result in results:
+        url = result.url
+        if url not in product_dict:
+            product_dict[url] = {
+                'name': result.name,
+                'url': result.url,
+                "img": result.img,
+                "source": result.source,
+                "created_at": result.created_at,
+                'priceHistory': []
+            }
