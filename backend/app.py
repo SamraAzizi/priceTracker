@@ -43,3 +43,14 @@ def submit_results():
     results = request.json.get('data')
     search_text = request.json.get("search_text")
     source = request.json.get("source")
+
+    for result in results:
+        product_result = ProductResult(
+            name=result['name'],
+            url=result['url'],
+            img=result["img"],
+            price=result['price'],
+            search_text=search_text,
+            source=source
+        )
+        db.session.add(product_result)
