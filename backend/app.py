@@ -94,3 +94,19 @@ def get_product_results():
     formatted_results = list(product_dict.values())
 
     return jsonify(formatted_results)
+
+@app.route('/all-results', methods=['GET'])
+def get_results():
+    results = ProductResult.query.all()
+    product_results = []
+    for result in results:
+        product_results.append({
+            'name': result.name,
+            'url': result.url,
+            'price': result.price,
+            "img": result.img,
+            'date': result.created_at,
+            "created_at": result.created_at,
+            "search_text": result.search_text,
+            "source": result.source
+        })
