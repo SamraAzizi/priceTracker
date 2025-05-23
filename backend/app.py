@@ -121,3 +121,13 @@ def start_scraper():
     # Run scraper asynchronously in a separate Python process
         
 
+    command = f"python ./scraper/__init__.py {url} \"{search_text}\" /results"
+    subprocess.Popen(command, shell=True)
+
+    response = {'message': 'Scraper started successfully'}
+    return jsonify(response), 200
+
+
+@app.route('/add-tracked-product', methods=['POST'])
+def add_tracked_product():
+    name = request.json.get('name')
