@@ -139,3 +139,11 @@ def add_tracked_product():
     response = {'message': 'Tracked product added successfully',
                 'id': tracked_product.id}
     return jsonify(response), 200
+
+@app.route('/tracked-product/<int:product_id>', methods=['PUT'])
+def toggle_tracked_product(product_id):
+    tracked_product = TrackedProducts.query.get(product_id)
+    if tracked_product is None:
+        response = {'message': 'Tracked product not found'}
+        return jsonify(response), 404
+
