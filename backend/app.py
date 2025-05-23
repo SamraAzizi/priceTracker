@@ -131,3 +131,11 @@ def start_scraper():
 @app.route('/add-tracked-product', methods=['POST'])
 def add_tracked_product():
     name = request.json.get('name')
+
+    tracked_product = TrackedProducts(name=name)
+    db.session.add(tracked_product)
+    db.session.commit()
+
+    response = {'message': 'Tracked product added successfully',
+                'id': tracked_product.id}
+    return jsonify(response), 200
