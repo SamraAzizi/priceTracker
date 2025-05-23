@@ -110,3 +110,14 @@ def get_results():
             "search_text": result.search_text,
             "source": result.source
         })
+        return jsonify(product_results)
+
+
+@app.route('/start-scraper', methods=['POST'])
+def start_scraper():
+    url = request.json.get('url')
+    search_text = request.json.get('search_text')
+
+    # Run scraper asynchronously in a separate Python process
+        
+
