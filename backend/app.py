@@ -146,4 +146,13 @@ def toggle_tracked_product(product_id):
     if tracked_product is None:
         response = {'message': 'Tracked product not found'}
         return jsonify(response), 404
+    
+    tracked_product.tracked = not tracked_product.tracked
+    db.session.commit()
+
+    response = {'message': 'Tracked product toggled successfully'}
+    return jsonify(response), 200
+
+
+@app.route('/tracked-products', methods=['GET'])
 
