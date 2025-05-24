@@ -165,3 +165,17 @@ def update_tracked_products():
         name = tracked_product.name
         if not tracked_product.tracked:
             continue
+
+        command = f"python ./scraper/__init__.py {url} \"{name}\" /results"
+        subprocess.Popen(command, shell=True)
+        product_names.append(name)
+
+    response = {'message': 'Scrapers started successfully',
+                "products": product_names}
+    return jsonify(response), 200
+
+
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+    app.run()
