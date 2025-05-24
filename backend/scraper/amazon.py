@@ -14,3 +14,12 @@ async def get_product(product_div):
     price_element_future = product_div.query_selector('span.a-offscreen')
     url_element_future = product_div.query_selector(
         'a.a-link-normal.s-no-hover.s-underline-text.s-underline-link-text.s-link-style.a-text-normal')
+
+ # Await all queries at once
+    image_element, name_element, price_element, url_element = await gather(
+        image_element_future,
+        name_element_future,
+        price_element_future,
+        url_element_future,
+        # get_stock(product_div)
+    )
