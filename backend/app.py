@@ -156,3 +156,12 @@ def toggle_tracked_product(product_id):
 
 @app.route('/tracked-products', methods=['GET'])
 
+def update_tracked_products():
+    tracked_products = TrackedProducts.query.all()
+    url = "https://amazon.ca"
+
+    product_names = []
+    for tracked_product in tracked_products:
+        name = tracked_product.name
+        if not tracked_product.tracked:
+            continue
