@@ -16,3 +16,13 @@ URLS = {
 }
 
 available_urls = URLS.keys()
+
+def load_auth():
+    FILE = os.path.join("Scraper", "auth.json")
+    with open(FILE, "r") as f:
+        return json.load(f)
+
+# place your bright data credentials in auth.json file with keys: "username", "password" and "host"
+cred = load_auth()
+auth = f'{cred["username"]}:{cred["password"]}'
+browser_url = f'wss://{auth}@{cred["host"]}'
