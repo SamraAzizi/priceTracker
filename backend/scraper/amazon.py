@@ -31,3 +31,8 @@ async def get_product(product_div):
         print((await price_element.inner_text()).replace("$", "").replace(",", "").strip())
         product_price = float((await price_element.inner_text()).replace("$", "").replace(",", "").strip()) if price_element else None
     except:
+        product_price = None
+    product_url = "/".join((await url_element.get_attribute('href')).split("/")[:4]) if url_element else None
+    # stock = stock_element[0] if len(stock_element) > 0 else None
+
+    return {"img": image_url, "name": product_name, "price": product_price, "url": product_url}
