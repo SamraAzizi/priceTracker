@@ -23,3 +23,11 @@ async def get_product(product_div):
         url_element_future,
         # get_stock(product_div)
     )
+
+     # Fetch all attributes and text at once
+    image_url = await image_element.get_attribute('src') if image_element else None
+    product_name = await name_element.inner_text() if name_element else None
+    try:
+        print((await price_element.inner_text()).replace("$", "").replace(",", "").strip())
+        product_price = float((await price_element.inner_text()).replace("$", "").replace(",", "").strip()) if price_element else None
+    except:
