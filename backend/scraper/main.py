@@ -67,3 +67,17 @@ async def get_products(page, search_text, selector, get_product):
                 else:
                     valid_products.append(product)
             tg.create_task(task(div))
+            return valid_products
+
+
+def save_results(results):
+    data = {"results": results}
+    FILE = os.path.join("Scraper", "results.json")
+    with open(FILE, "w") as f:
+        json.dump(data, f)
+
+
+def post_results(results, endpoint, search_text, source):
+    headers = {
+        "Content-Type": "application/json"
+    }
