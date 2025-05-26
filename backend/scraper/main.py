@@ -26,3 +26,8 @@ def load_auth():
 cred = load_auth()
 auth = f'{cred["username"]}:{cred["password"]}'
 browser_url = f'wss://{auth}@{cred["host"]}'
+
+async def search(metadata, page, search_text):
+    print(f"Searching for {search_text} on {page.url}")
+    search_field_query = metadata.get("search_field_query")
+    search_button_query = metadata.get("search_button_query")
