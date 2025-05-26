@@ -38,3 +38,13 @@ async def search(metadata, page, search_text):
         await search_box.type(search_text)
         print("Pressing search button")
         button = await page.wait_for_selector(search_button_query)
+
+        await button.click()
+    else:
+        raise Exception("Could not search.")
+
+    await page.wait_for_load_state()
+    return page
+
+
+async def get_products(page, search_text, selector, get_product):
