@@ -48,3 +48,11 @@ async def search(metadata, page, search_text):
 
 
 async def get_products(page, search_text, selector, get_product):
+    print("Retreiving products.")
+    product_divs = await page.query_selector_all(selector)
+    valid_products = []
+    words = search_text.split(" ")
+
+    async with asyncio.TaskGroup() as tg:
+        for div in product_divs:
+            async def task(p_div):
