@@ -90,3 +90,11 @@ def post_results(results, endpoint, search_text, source):
     print("Status code:", response.status_code)
 
     
+    async def main(url, search_text, response_route):
+    metadata = URLS.get(url)
+    if not metadata:
+        print("Invalid URL.")
+        return
+
+    async with async_playwright() as pw:
+        print('Connecting to browser.')
