@@ -81,3 +81,12 @@ def post_results(results, endpoint, search_text, source):
     headers = {
         "Content-Type": "application/json"
     }
+
+    data = {"data": results, "search_text": search_text, "source": source}
+
+    print("Sending request to", endpoint)
+    response = post("http://localhost:5000" + endpoint,
+                    headers=headers, json=data)
+    print("Status code:", response.status_code)
+
+    
