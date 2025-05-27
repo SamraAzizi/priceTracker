@@ -90,7 +90,7 @@ def post_results(results, endpoint, search_text, source):
     print("Status code:", response.status_code)
 
     
-    async def main(url, search_text, response_route):
+async def main(url, search_text, response_route):
     metadata = URLS.get(url)
     if not metadata:
         print("Invalid URL.")
@@ -98,3 +98,11 @@ def post_results(results, endpoint, search_text, source):
 
     async with async_playwright() as pw:
         print('Connecting to browser.')
+        browser = await pw.chromium.connect_over_cdp(browser_url)
+        page = await browser.new_page()
+        print("Connected.")
+        await page.goto(url, timeout=120000)
+        print("Loaded initial page.")
+        search_page = await search(metadata, page, search_text)
+
+        def func(x): return None
