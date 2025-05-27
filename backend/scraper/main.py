@@ -17,6 +17,7 @@ URLS = {
 
 available_urls = URLS.keys()
 
+
 def load_auth():
     FILE = os.path.join("Scraper", "auth.json")
     with open(FILE, "r") as f:
@@ -26,6 +27,7 @@ def load_auth():
 cred = load_auth()
 auth = f'{cred["username"]}:{cred["password"]}'
 browser_url = f'wss://{auth}@{cred["host"]}'
+
 
 async def search(metadata, page, search_text):
     print(f"Searching for {search_text} on {page.url}")
@@ -38,7 +40,6 @@ async def search(metadata, page, search_text):
         await search_box.type(search_text)
         print("Pressing search button")
         button = await page.wait_for_selector(search_button_query)
-
         await button.click()
     else:
         raise Exception("Could not search.")
@@ -67,7 +68,8 @@ async def get_products(page, search_text, selector, get_product):
                 else:
                     valid_products.append(product)
             tg.create_task(task(div))
-            return valid_products
+
+    return valid_products
 
 
 def save_results(results):
@@ -81,7 +83,6 @@ def post_results(results, endpoint, search_text, source):
     headers = {
         "Content-Type": "application/json"
     }
-
     data = {"data": results, "search_text": search_text, "source": source}
 
     print("Sending request to", endpoint)
@@ -89,7 +90,7 @@ def post_results(results, endpoint, search_text, source):
                     headers=headers, json=data)
     print("Status code:", response.status_code)
 
-    
+
 async def main(url, search_text, response_route):
     metadata = URLS.get(url)
     if not metadata:
@@ -106,3 +107,17 @@ async def main(url, search_text, response_route):
         search_page = await search(metadata, page, search_text)
 
         def func(x): return None
+        if url == AMAZON:
+            func = get_amazon_product
+        else:
+            raise Exception('Invalid URL')
+
+        results = await get_products(search_page, search_text, metadata["product_selector"], func)
+        print("Saving results.")
+        post_results(results, response_route, search_text, url)
+
+        await browser.close()
+
+if __name__ == "__main__":
+    # test script
+    asyncio.run(main(AMAZON, "ryzen 9 3950x"))
