@@ -47,3 +47,26 @@ const ProductDetailsPage = ({ product }) => {
       },
       xaxis: {
         categories: dates, // Example categories (dates)
+
+         },
+    },
+    series: [
+      {
+        name: "Price",
+        data: prices, // Example data
+      },
+    ],
+  };
+
+  return (
+    <div>
+      <h2>{name}</h2>
+      <img src={img} alt="Product" />
+      <p>
+        URL:{" "}
+        <a href={`${source}${productUrl}`} target="_blank">
+          View product.
+        </a>
+      </p>
+      <p>
+        Source:{" "}
