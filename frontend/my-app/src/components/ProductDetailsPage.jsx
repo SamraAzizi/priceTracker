@@ -47,8 +47,7 @@ const ProductDetailsPage = ({ product }) => {
       },
       xaxis: {
         categories: dates, // Example categories (dates)
-
-         },
+      },
     },
     series: [
       {
@@ -70,3 +69,23 @@ const ProductDetailsPage = ({ product }) => {
       </p>
       <p>
         Source:{" "}
+        <a target="_blank" href={source}>
+          {source}
+        </a>
+      </p>
+      <p>Newest Price At: {createdAt}</p>
+      <h2>Price History</h2>
+      <h3>
+        Current Price: ${prices.length > 0 ? prices[prices.length - 1] : "N/A"}
+      </h3>
+      <ApexCharts
+        options={chartData.options}
+        series={chartData.series}
+        type="line"
+        height={300}
+      />
+    </div>
+  );
+};
+
+export default ProductDetailsPage;
